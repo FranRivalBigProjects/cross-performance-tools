@@ -1,0 +1,1 @@
+const res=document.getElementById('res');function run(){let w=+webpack.value,e=+esbuild.value;if(!w||!e){res.innerText='Enter values';return;}res.innerText=w>e?'ESBuild smaller':'Webpack smaller';}

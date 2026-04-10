@@ -1,0 +1,1 @@
+const res=document.getElementById('res');function run(){let r=+rollup.value,w=+webpack.value;if(!r||!w){res.innerText='Enter values';return;}res.innerText=r<w?'Rollup smaller':'Webpack smaller';}

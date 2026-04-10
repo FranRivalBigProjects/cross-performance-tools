@@ -1,0 +1,1 @@
+const res=document.getElementById('res');function run(){let b=+babel.value,s=+swc.value;if(!b||!s){res.innerText='Enter values';return;}res.innerText=b<s?'SWC faster':'Babel more stable';}

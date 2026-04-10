@@ -1,0 +1,1 @@
+const res=document.getElementById('res');function run(){let e=+esbuild.value,v=+vite.value;if(!e||!v){res.innerText='Enter values';return;}res.innerText=e<v?'ESBuild faster':'Vite faster';}

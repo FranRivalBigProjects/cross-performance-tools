@@ -1,0 +1,1 @@
+const res=document.getElementById('res');function run(){let v=+vite.value,w=+webpack.value;if(!v||!w){res.innerText='Enter values';return;}res.innerText=v<w?'Vite faster':'Webpack faster';}

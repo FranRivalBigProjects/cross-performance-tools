@@ -1,0 +1,1 @@
+const res=document.getElementById('res');function run(){let p=+parcel.value,v=+vite.value;if(!p||!v){res.innerText='Enter values';return;}res.innerText=p<v?'Parcel faster':'Vite faster';}
