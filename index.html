@@ -212,9 +212,60 @@
         </ul>
     </section>
 
-    <!-- 3. DECISION GUIDE -->
+    <!-- 3. INTERACTIVE COMPARISON TOOL -->
     <section>
-        <h2>🎯 When to Use Each</h2>
+        <h2>🛠️ Interactive Comparison Tool</h2>
+        <p>Select your criteria to find the best build tool for your project:</p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
+            <div>
+                <label style="display: block; font-weight: 600; margin-bottom: 8px;">What's Your Priority?</label>
+                <select id="priority" style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 1rem;">
+                    <option value="speed">Speed (Fast builds)</option>
+                    <option value="ecosystem">Ecosystem (Plugins)</option>
+                    <option value="ease">Ease of Use</option>
+                    <option value="flexibility">Flexibility</option>
+                </select>
+            </div>
+
+            <div>
+                <label style="display: block; font-weight: 600; margin-bottom: 8px;">Project Type</label>
+                <select id="projectType" style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 1rem;">
+                    <option value="spa">Single Page App</option>
+                    <option value="library">Library/Package</option>
+                    <option value="monorepo">Monorepo</option>
+                    <option value="legacy">Legacy Project</option>
+                </select>
+            </div>
+
+            <div>
+                <label style="display: block; font-weight: 600; margin-bottom: 8px;">Team Size</label>
+                <select id="teamSize" style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 1rem;">
+                    <option value="solo">Solo Developer</option>
+                    <option value="small">Small Team (2-5)</option>
+                    <option value="medium">Medium Team (5-20)</option>
+                    <option value="large">Large Team (20+)</option>
+                </select>
+            </div>
+        </div>
+
+        <button onclick="compareTools()" style="background: var(--primary); color: white; padding: 12px 30px; border: none; border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer; margin: 20px 0;">Compare Tools</button>
+        <button onclick="resetTools()" style="background: white; color: var(--primary); padding: 12px 30px; border: 2px solid var(--primary); border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer; margin: 20px 10px 20px 0;">Reset</button>
+
+        <div id="toolResults" style="display: none; margin-top: 30px;">
+            <div style="background: var(--light); border-left: 4px solid var(--success); padding: 20px; border-radius: 6px;">
+                <h3 style="margin-top: 0; color: var(--success);">🎯 Recommended Tool</h3>
+                <p style="font-size: 1.3rem; font-weight: 700; margin: 10px 0;"><span id="recommendedTool"></span></p>
+                <p style="margin: 10px 0;"><strong>Why:</strong> <span id="recommendedReason"></span></p>
+                <p style="margin: 10px 0;"><strong>Score:</strong> <span id="recommendedScore"></span>/10</p>
+                <p style="margin: 15px 0;"><a id="recommendedLink" href="#" target="_blank" style="background: var(--primary); color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; display: inline-block;">Visit Official Docs →</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3B. DECISION GUIDE -->
+    <section>
+        <h2>🎯 Quick Decision Guide</h2>
 
         <div class="scenario">
             <h3>🆕 Starting a New Project</h3>
