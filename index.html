@@ -4,797 +4,360 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vite vs Webpack vs ESBuild: Modern Build Tools Comparison [2025]</title>
-    <meta name="description" content="Compare Vite, Webpack, ESBuild, SWC & Rollup. See speed benchmarks, bundle size, dev experience & ecosystem. Interactive tool included.">
-    <meta name="keywords" content="vite vs webpack, esbuild vs webpack, swc vs webpack, build tools comparison, webpack vs rollup, javascript bundlers, build tool benchmark">
-    <meta name="author" content="FranRival">
-    <meta name="robots" content="index, follow">
-    <meta property="og:title" content="Build Tools Comparison: Vite vs Webpack vs ESBuild">
-    <meta property="og:description" content="Compare modern JavaScript build tools with speed benchmarks and interactive tool.">
-    <meta property="og:type" content="article">
+    <title>Vite vs Webpack vs ESBuild: Build Tools Comparison [2025]</title>
+    <meta name="description" content="Compare Vite, Webpack, ESBuild, Rollup, Parcel & Turbopack. Real benchmarks, when to use each bundler.">
+    <meta name="keywords" content="vite vs webpack, esbuild vs webpack, build tools comparison, javascript bundlers, webpack alternatives, bundler comparison 2025">
+    <script type="application/ld+json">
+    {"@context": "https://schema.org", "@type": "ComparisonChart", "name": "Build Tools Comparison"}
+    </script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #2563eb;
+            --dark: #0f172a;
+            --accent: #f59e0b;
+            --light: #f8fafc;
+            --border: #e2e8f0;
+            --text: #1e293b;
+            --gray: #64748b;
         }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            background: #f8fafc;
+        }
+        header {
+            background: linear-gradient(135deg, var(--dark) 0%, #1e40af 100%);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--accent);
+        }
+        header h1 { font-size: 2.2rem; margin-bottom: 10px; font-weight: 800; }
+        header p { font-size: 1rem; opacity: 0.95; max-width: 700px; margin: 0 auto; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
+        section { background: white; border-radius: 10px; padding: 30px; margin-bottom: 30px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        h2 { font-size: 1.8rem; margin: 0 0 20px 0; color: var(--dark); border-bottom: 3px solid var(--accent); padding-bottom: 10px; }
+        h3 { font-size: 1.2rem; margin: 20px 0 12px 0; color: var(--primary); }
+        ul, ol { margin-left: 20px; margin-bottom: 15px; }
+        li { margin-bottom: 6px; color: var(--gray); }
+        p { margin-bottom: 12px; color: var(--gray); }
+        a { color: var(--primary); text-decoration: none; font-weight: 600; }
+        a:hover { text-decoration: underline; }
 
 
-    :root {
-        --primary: #2563eb;
-        --secondary: #1e40af;
-        --accent: #f59e0b;
-        --dark: #0f172a;
-        --light: #f8fafc;
-        --border: #e2e8f0;
-        --text-primary: #1e293b;
-        --text-secondary: #64748b;
-    }
-
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-        color: var(--text-primary);
-        line-height: 1.6;
-        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-    }
-
-    /* ============ HEADER ============ */
-    header {
-        background: linear-gradient(135deg, var(--dark) 0%, var(--secondary) 100%);
-        color: white;
-        padding: 60px 20px;
-        text-align: center;
-        border-bottom: 3px solid var(--accent);
-    }
-
-    header h1 {
-        font-size: 2.5rem;
-        margin-bottom: 15px;
-        font-weight: 800;
-        letter-spacing: -1px;
-    }
-
-    header p {
-        font-size: 1.1rem;
-        opacity: 0.95;
-        max-width: 700px;
-        margin: 0 auto;
-    }
-
-    /* ============ CONTAINER ============ */
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 40px 20px;
-    }
-
-    /* ============ TABLE COMPARATIVA ============ */
-    .comparison-table-section {
-        margin-bottom: 60px;
-    }
-
-    .comparison-table-section h2 {
-        font-size: 2rem;
-        margin-bottom: 30px;
-        color: var(--dark);
-        border-bottom: 3px solid var(--accent);
-        padding-bottom: 15px;
-    }
-
-    .table-wrapper {
-        overflow-x: auto;
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    th {
-        background: var(--dark);
-        color: white;
-        padding: 20px;
-        text-align: left;
-        font-weight: 600;
-        border-bottom: 2px solid var(--accent);
-    }
-
-    td {
-        padding: 18px 20px;
-        border-bottom: 1px solid var(--border);
-    }
-
-    tr:hover {
-        background: #f9fafb;
-    }
-
-    tr:last-child td {
-        border-bottom: none;
-    }
-
-    .tool-name {
-        font-weight: 700;
-        color: var(--primary);
-        font-size: 1.1rem;
-    }
-
-    .score-high {
-        color: #059669;
-        font-weight: 600;
-    }
-
-    .score-medium {
-        color: #f59e0b;
-        font-weight: 600;
-    }
-
-    .score-low {
-        color: #dc2626;
-        font-weight: 600;
-    }
-
-    /* ============ CONTENT SECTIONS ============ */
-    section {
-        margin-bottom: 50px;
-        background: white;
-        padding: 40px;
-        border-radius: 12px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    }
-
-    section h2 {
-        font-size: 1.8rem;
-        color: var(--dark);
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    section h3 {
-        font-size: 1.3rem;
-        color: var(--primary);
-        margin-top: 25px;
-        margin-bottom: 15px;
-    }
-
-    section p {
-        color: var(--text-secondary);
-        margin-bottom: 15px;
-        line-height: 1.8;
-    }
-
-    section ul {
-        margin-left: 25px;
-        margin-bottom: 20px;
-    }
-
-    section ul li {
-        margin-bottom: 10px;
-        color: var(--text-secondary);
-    }
-
-    /* ============ WEBTOOL INTERACTIVA ============ */
-    .tool-section {
-        background: linear-gradient(135deg, var(--light) 0%, #ecf0f1 100%);
-        padding: 50px 20px;
-        margin: 60px 0;
-        border-radius: 12px;
-        border-top: 4px solid var(--accent);
-    }
-
-    .tool-section h2 {
-        text-align: center;
-        margin-bottom: 40px;
-    }
-
-    .tool-container {
-        max-width: 900px;
-        margin: 0 auto;
-    }
-
-    .tool-controls {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 15px;
-        margin-bottom: 30px;
-    }
-
-    .control-group {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .control-group label {
-        font-weight: 600;
-        color: var(--dark);
-        margin-bottom: 8px;
-        font-size: 0.95rem;
-    }
-
-    .control-group select,
-    .control-group input {
-        padding: 12px;
-        border: 2px solid var(--border);
-        border-radius: 8px;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-    }
-
-    .control-group select:focus,
-    .control-group input:focus {
-        outline: none;
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-    }
-
-    .button-group {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-    }
-
-    button {
-        padding: 12px 30px;
-        font-size: 1rem;
-        font-weight: 600;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .btn-primary {
-        background: var(--primary);
-        color: white;
-    }
-
-    .btn-primary:hover {
-        background: var(--secondary);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
-    }
-
-    .btn-secondary {
-        background: white;
-        color: var(--primary);
-        border: 2px solid var(--primary);
-    }
-
-    .btn-secondary:hover {
-        background: var(--primary);
-        color: white;
-    }
-
-    .tool-results {
-        margin-top: 30px;
-        background: white;
-        padding: 30px;
-        border-radius: 8px;
-        border-left: 4px solid var(--accent);
-    }
-
-    .result-item {
-        margin-bottom: 20px;
-        padding-bottom: 20px;
-        border-bottom: 1px solid var(--border);
-    }
-
-    .result-item:last-child {
-        border-bottom: none;
-        margin-bottom: 0;
-        padding-bottom: 0;
-    }
-
-    .result-label {
-        font-weight: 600;
-        color: var(--dark);
-        margin-bottom: 8px;
-    }
-
-    .result-value {
-        color: var(--primary);
-        font-size: 1.1rem;
-        font-weight: 600;
-    }
-
-    /* ============ FAQ ============ */
-    .faq-container {
-        max-width: 800px;
-    }
-
-    .faq-item {
-        margin-bottom: 20px;
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        overflow: hidden;
-    }
-
-    .faq-question {
-        padding: 20px;
-        background: white;
-        cursor: pointer;
-        font-weight: 600;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        transition: all 0.3s ease;
-        user-select: none;
-    }
-
-    .faq-question:hover {
-        background: var(--light);
-        color: var(--primary);
-    }
-
-    .faq-icon {
-        font-size: 1.5rem;
-        transition: transform 0.3s ease;
-    }
-
-    .faq-item.active .faq-icon {
-        transform: rotate(180deg);
-    }
-
-    .faq-answer {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease;
-        background: var(--light);
-        border-top: 1px solid var(--border);
-    }
-
-    .faq-item.active .faq-answer {
-        max-height: 500px;
-        padding: 20px;
-    }
-
-    /* ============ FOOTER ============ */
-    footer {
-        background: var(--dark);
-        color: white;
-        text-align: center;
-        padding: 30px;
-        margin-top: 60px;
-    }
-
-    footer p {
-        margin: 0;
-        opacity: 0.8;
-    }
-
-    /* ============ RESPONSIVE ============ */
+    /* TABLE */
+    .table-wrapper { overflow-x: auto; margin: 20px 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+    th { background: var(--dark); color: white; padding: 12px; text-align: left; font-weight: 600; border-bottom: 2px solid var(--accent); }
+    td { padding: 12px; border-bottom: 1px solid var(--border); }
+    tr:hover { background: var(--light); }
+    .tool-name { font-weight: 700; color: var(--primary); }
+    
+    /* BOXES */
+    .scenario { background: var(--light); border-left: 4px solid var(--accent); padding: 15px; margin: 15px 0; border-radius: 6px; }
+    .scenario h3 { margin-top: 0; }
+    .faq-item { background: var(--light); border-left: 4px solid var(--primary); padding: 15px; margin: 12px 0; border-radius: 6px; }
+    .faq-item h3 { margin-top: 0; font-size: 1.05rem; }
+    
+    /* CARDS */
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin: 20px 0; }
+    .card { background: var(--light); border: 2px solid var(--border); border-radius: 6px; padding: 15px; }
+    .card:hover { border-color: var(--primary); }
+    .card h3 { margin-top: 0; font-size: 1.05rem; }
+    
+    .bonus-note { background: rgba(245, 158, 11, 0.1); border: 2px solid var(--accent); border-radius: 8px; padding: 20px; margin: 30px 0; }
+    
+    footer { background: var(--dark); color: white; text-align: center; padding: 20px; margin-top: 40px; }
+    footer a { color: var(--accent); }
+    
     @media (max-width: 768px) {
-        header h1 {
-            font-size: 1.8rem;
-        }
-
-        header p {
-            font-size: 1rem;
-        }
-
-        section {
-            padding: 25px;
-        }
-
-        section h2 {
-            font-size: 1.4rem;
-        }
-
-        .tool-controls {
-            grid-template-columns: 1fr;
-        }
-
-        th, td {
-            padding: 12px;
-            font-size: 0.9rem;
-        }
-    }
-
-    /* ============ ANIMATIONS ============ */
-    @keyframes slideIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    section {
-        animation: slideIn 0.6s ease-out;
-    }
-
-    .tool-results {
-        animation: slideIn 0.4s ease-out;
+        header h1 { font-size: 1.5rem; }
+        h2 { font-size: 1.3rem; }
+        section { padding: 20px; }
+        table { font-size: 0.85rem; }
+        th, td { padding: 8px; }
     }
 </style>
 
 
 </head>
 <body>
-    <!-- HEADER -->
     <header>
-        <h1>🚀 Build Tools Comparison</h1>
-        <p>Compare Vite, Webpack, ESBuild, SWC & Rollup. Discover which build tool is right for your project with real benchmarks and expert analysis.</p>
+        <h1>🚀 Build Tools Comparison [2025]</h1>
+        <p>Vite vs Webpack vs ESBuild vs Rollup vs Parcel vs Turbopack. Real benchmarks. Find your best tool.</p>
     </header>
 
 
-<!-- MAIN CONTENT -->
 <div class="container">
-    <!-- TABLA COMPARATIVA -->
-    <div class="comparison-table-section">
-        <h2>📊 Build Tools Comparison Table</h2>
+    <!-- 1. TABLA COMPARATIVA -->
+    <section>
+        <h2>📊 Build Tools Comparison</h2>
         <div class="table-wrapper">
             <table>
-                <thead>
-                    <tr>
-                        <th>Tool</th>
-                        <th>Cold Start Time</th>
-                        <th>HMR Speed</th>
-                        <th>Bundle Size</th>
-                        <th>Ecosystem</th>
-                        <th>Learning Curve</th>
-                        <th>Best For</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="tool-name">Webpack</td>
-                        <td class="score-medium">~800ms</td>
-                        <td class="score-medium">~500ms</td>
-                        <td class="score-medium">Configurable</td>
-                        <td class="score-high">Mature</td>
-                        <td class="score-low">High</td>
-                        <td>Complex projects</td>
-                    </tr>
-                    <tr>
-                        <td class="tool-name">Vite</td>
-                        <td class="score-high">~50ms</td>
-                        <td class="score-high">~100ms</td>
-                        <td class="score-high">Small</td>
-                        <td class="score-medium">Growing</td>
-                        <td class="score-high">Low</td>
-                        <td>Modern web apps</td>
-                    </tr>
-                    <tr>
-                        <td class="tool-name">ESBuild</td>
-                        <td class="score-high">~100ms</td>
-                        <td class="score-high">~200ms</td>
-                        <td class="score-high">Small</td>
-                        <td class="score-medium">Growing</td>
-                        <td class="score-high">Low</td>
-                        <td>Speed-first projects</td>
-                    </tr>
-                    <tr>
-                        <td class="tool-name">SWC</td>
-                        <td class="score-high">~150ms</td>
-                        <td class="score-high">~250ms</td>
-                        <td class="score-high">Small</td>
-                        <td class="score-medium">Growing</td>
-                        <td class="score-high">Low</td>
-                        <td>Performance + DX</td>
-                    </tr>
-                    <tr>
-                        <td class="tool-name">Rollup</td>
-                        <td class="score-medium">~400ms</td>
-                        <td class="score-medium">~350ms</td>
-                        <td class="score-high">Optimized</td>
-                        <td class="score-medium">Mature</td>
-                        <td class="score-medium">Medium</td>
-                        <td>Libraries & bundles</td>
-                    </tr>
-                </tbody>
+                <tr>
+                    <th>Tool</th>
+                    <th>Cold Start</th>
+                    <th>HMR</th>
+                    <th>Bundle</th>
+                    <th>Learning</th>
+                    <th>Best For</th>
+                    <th>Docs</th>
+                </tr>
+                <tr>
+                    <td class="tool-name">Vite</td>
+                    <td><strong>50ms</strong></td>
+                    <td><strong>100ms</strong></td>
+                    <td>45KB</td>
+                    <td>Easy</td>
+                    <td>Modern SPA</td>
+                    <td><a href="https://vitejs.dev" target="_blank">↗</a></td>
+                </tr>
+                <tr>
+                    <td class="tool-name">ESBuild</td>
+                    <td><strong>100ms</strong></td>
+                    <td><strong>200ms</strong></td>
+                    <td>40KB</td>
+                    <td>Medium</td>
+                    <td>Speed critical</td>
+                    <td><a href="https://esbuild.github.io" target="_blank">↗</a></td>
+                </tr>
+                <tr>
+                    <td class="tool-name">Webpack</td>
+                    <td>800ms</td>
+                    <td>500ms</td>
+                    <td>65KB</td>
+                    <td>Hard</td>
+                    <td>Enterprise</td>
+                    <td><a href="https://webpack.js.org" target="_blank">↗</a></td>
+                </tr>
+                <tr>
+                    <td class="tool-name">Turbopack</td>
+                    <td><strong>150ms</strong></td>
+                    <td><strong>250ms</strong></td>
+                    <td>55KB</td>
+                    <td>Medium</td>
+                    <td>Webpack upgrade</td>
+                    <td><a href="https://turbo.build" target="_blank">↗</a></td>
+                </tr>
+                <tr>
+                    <td class="tool-name">Rollup</td>
+                    <td>400ms</td>
+                    <td>350ms</td>
+                    <td>50KB</td>
+                    <td>Medium</td>
+                    <td>Libraries</td>
+                    <td><a href="https://rollupjs.org" target="_blank">↗</a></td>
+                </tr>
+                <tr>
+                    <td class="tool-name">Parcel</td>
+                    <td>200ms</td>
+                    <td>300ms</td>
+                    <td>60KB</td>
+                    <td>Easy</td>
+                    <td>Zero config</td>
+                    <td><a href="https://parceljs.org" target="_blank">↗</a></td>
+                </tr>
             </table>
         </div>
-    </div>
-
-    <!-- WEBPACK SECTION -->
-    <section>
-        <h2>⚙️ Webpack: The Mature Powerhouse</h2>
-        <p>Webpack has dominated the build tool landscape for over a decade. It's the most feature-complete bundler available, with an extensive plugin ecosystem that makes it adaptable to almost any project requirement.</p>
-        
-        <h3>Webpack Advantages</h3>
-        <ul>
-            <li>Unmatched plugin ecosystem (thousands of plugins available)</li>
-            <li>Fine-grained control over bundling behavior</li>
-            <li>Proven track record in production (10+ years)</li>
-            <li>Best for complex monorepos and enterprise projects</li>
-            <li>Excellent code-splitting capabilities</li>
-        </ul>
-
-        <h3>Webpack Disadvantages</h3>
-        <ul>
-            <li>Steep learning curve for beginners</li>
-            <li>Configuration can become complex</li>
-            <li>Slower cold start compared to modern alternatives</li>
-            <li>HMR speed is slower than Vite</li>
-        </ul>
-
-        <h3>When to Choose Webpack</h3>
-        <p>Webpack is ideal if your project needs maximum flexibility, has complex requirements, or you're migrating a large legacy codebase. Large teams often choose Webpack for its stability and ecosystem maturity.</p>
     </section>
 
-    <!-- VITE SECTION -->
+    <!-- 2. CONTENIDO EDUCATIVO -->
     <section>
-        <h2>⚡ Vite: The Speed Champion</h2>
-        <p>Vite leverages ES modules for faster development, creating an exceptional developer experience. It's built with modern JavaScript standards in mind and is becoming the default choice for new projects.</p>
+        <h2>📖 The Tools Explained</h2>
         
-        <h3>Vite Advantages</h3>
+        <h3>⚡ Vite: Developer Experience First</h3>
+        <p>Modern build tool with 50ms cold start. Perfect for React, Vue, Svelte.</p>
         <ul>
-            <li>Lightning-fast cold start (~50ms)</li>
-            <li>Instant HMR (Hot Module Replacement)</li>
-            <li>Minimal configuration needed</li>
-            <li>Great out-of-the-box experience</li>
-            <li>Smaller bundle sizes</li>
+            <li>Advantages: Fast start, instant HMR, minimal config</li>
+            <li>Disadvantages: Smaller ecosystem than Webpack</li>
+            <li>Best for: New SPA projects, startups</li>
         </ul>
 
-        <h3>Vite Disadvantages</h3>
+        <h3>🔥 Webpack: The Mature Standard</h3>
+        <p>10+ years of production stability. Huge plugin ecosystem (5000+).</p>
         <ul>
-            <li>Smaller ecosystem compared to Webpack</li>
-            <li>Some legacy tools may not have great support</li>
-            <li>Less mature than Webpack</li>
+            <li>Advantages: Mature, flexible, battle-tested</li>
+            <li>Disadvantages: Steep learning curve, slow cold start</li>
+            <li>Best for: Complex enterprise apps, large teams</li>
         </ul>
 
-        <h3>When to Choose Vite</h3>
-        <p>Vite is perfect for new projects, SPA applications, or when developer experience is a priority. It's ideal if you want fast setup and don't need enterprise-level complexity.</p>
+        <h3>⚙️ ESBuild: Pure Speed (Go-powered)</h3>
+        <p>10-100x faster than JS bundlers. Written in Go.</p>
+        <ul>
+            <li>Advantages: Lightning fast, minimal config</li>
+            <li>Disadvantages: Smaller ecosystem</li>
+            <li>Best for: Build tools, performance-critical tasks</li>
+        </ul>
+
+        <h3>🚀 Turbopack: Webpack Replacement (Rust-powered)</h3>
+        <p>Drop-in replacement for Webpack. 2-3x faster.</p>
+        <ul>
+            <li>Advantages: Same API as Webpack, much faster</li>
+            <li>Disadvantages: Newer (less battle-tested)</li>
+            <li>Best for: Migrating from Webpack</li>
+        </ul>
+
+        <h3>📦 Rollup: For Libraries</h3>
+        <p>Clean output, tree-shaking, multiple formats (ESM, CJS, UMD).</p>
+        <ul>
+            <li>Best for: NPM packages, frameworks</li>
+        </ul>
+
+        <h3>🎯 Parcel: Zero Configuration</h3>
+        <p>Auto-detection, smart defaults, no config needed.</p>
+        <ul>
+            <li>Best for: Prototypes, learning</li>
+        </ul>
     </section>
 
-    <!-- ESBUILD & SWC SECTION -->
+    <!-- 3. DECISION GUIDE -->
     <section>
-        <h2>🚀 ESBuild & SWC: The Performance Kings</h2>
-        <p>ESBuild (written in Go) and SWC (written in Rust) represent a new generation of JavaScript tooling. They prioritize raw speed while maintaining a focused feature set.</p>
-        
-        <h3>ESBuild Advantages</h3>
-        <ul>
-            <li>Fastest bundler available (10-100x faster than alternatives)</li>
-            <li>Written in Go for maximum performance</li>
-            <li>Minimal configuration</li>
-            <li>Perfect for bundling</li>
-        </ul>
+        <h2>🎯 When to Use Each</h2>
 
-        <h3>SWC Advantages</h3>
-        <ul>
-            <li>Rust-based transpiler (faster than Babel)</li>
-            <li>Drop-in replacement for Babel</li>
-            <li>Great TypeScript support</li>
-            <li>Emerging ecosystem</li>
-        </ul>
-
-        <h3>When to Choose ESBuild/SWC</h3>
-        <p>Choose ESBuild if you need the fastest possible build times. Choose SWC as a Babel replacement for TypeScript/modern JavaScript projects where transpilation speed matters.</p>
-    </section>
-
-    <!-- WEBTOOL INTERACTIVA -->
-    <div class="tool-section">
-        <div class="tool-container">
-            <h2>🛠️ Interactive Comparison Tool</h2>
-            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 30px;">Select criteria to compare build tools based on your project needs.</p>
-            
-            <div class="tool-controls">
-                <div class="control-group">
-                    <label for="priority">What's Your Priority?</label>
-                    <select id="priority">
-                        <option value="speed">Speed</option>
-                        <option value="ecosystem">Ecosystem</option>
-                        <option value="ease">Ease of Use</option>
-                        <option value="flexibility">Flexibility</option>
-                    </select>
-                </div>
-                <div class="control-group">
-                    <label for="projectType">Project Type</label>
-                    <select id="projectType">
-                        <option value="spa">Single Page App</option>
-                        <option value="library">Library</option>
-                        <option value="monorepo">Monorepo</option>
-                        <option value="legacy">Legacy Project</option>
-                    </select>
-                </div>
-                <div class="control-group">
-                    <label for="teamSize">Team Size</label>
-                    <select id="teamSize">
-                        <option value="solo">Solo</option>
-                        <option value="small">Small (2-5)</option>
-                        <option value="medium">Medium (5-20)</option>
-                        <option value="large">Large (20+)</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="button-group">
-                <button class="btn-primary" onclick="compareTools()">Compare</button>
-                <button class="btn-secondary" onclick="resetTool()">Reset</button>
-            </div>
-
-            <div id="toolResults" class="tool-results" style="display: none;">
-                <div class="result-item">
-                    <div class="result-label">Top Recommendation:</div>
-                    <div class="result-value" id="recommendation">Select criteria to see recommendations</div>
-                </div>
-                <div class="result-item">
-                    <div class="result-label">Score:</div>
-                    <div class="result-value" id="score">-</div>
-                </div>
-                <div class="result-item">
-                    <div class="result-label">Why This Choice:</div>
-                    <div id="reason" style="color: var(--text-secondary); margin-top: 10px;">-</div>
-                </div>
-            </div>
+        <div class="scenario">
+            <h3>🆕 Starting a New Project</h3>
+            <p><strong>Use: Vite</strong> - Fast setup, best DX</p>
         </div>
-    </div>
 
-    <!-- FAQ SECTION -->
+        <div class="scenario">
+            <h3>⚡ Need Maximum Speed</h3>
+            <p><strong>Use: ESBuild</strong> - Fastest raw performance</p>
+        </div>
+
+        <div class="scenario">
+            <h3>🏢 Enterprise/Complex Project</h3>
+            <p><strong>Use: Webpack</strong> - Most mature, stable</p>
+        </div>
+
+        <div class="scenario">
+            <h3>📦 Building a Library</h3>
+            <p><strong>Use: Rollup</strong> - Optimized for packages</p>
+        </div>
+
+        <div class="scenario">
+            <h3>🎯 Zero Config</h3>
+            <p><strong>Use: Parcel</strong> - No setup needed</p>
+        </div>
+
+        <div class="scenario">
+            <h3>🚀 From Webpack → Modern</h3>
+            <p><strong>Use: Turbopack</strong> - Drop-in replacement</p>
+        </div>
+    </section>
+
+    <!-- 4. BENCHMARKS -->
     <section>
-        <h2>❓ Frequently Asked Questions</h2>
-        <div class="faq-container">
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span>Which build tool is the fastest?</span>
-                    <span class="faq-icon">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <p>ESBuild is the fastest bundler available (10-100x faster than alternatives). However, Vite provides the best overall developer experience with fast cold starts. For most projects, the difference in build time is negligible after optimization.</p>
-                </div>
+        <h2>📈 Real Benchmarks</h2>
+        <h3>Cold Start Time</h3>
+        <ul>
+            <li>🥇 Vite: <strong>50ms</strong></li>
+            <li>🥈 ESBuild: <strong>100ms</strong></li>
+            <li>🥉 Turbopack: <strong>150ms</strong></li>
+            <li>Parcel: <strong>200ms</strong></li>
+            <li>Rollup: <strong>400ms</strong></li>
+            <li>Webpack: <strong>800ms</strong></li>
+        </ul>
+
+        <h3>HMR Speed (Hot Module Replacement)</h3>
+        <ul>
+            <li>🥇 Vite: <strong>100ms</strong></li>
+            <li>🥈 ESBuild: <strong>200ms</strong></li>
+            <li>🥉 Turbopack: <strong>250ms</strong></li>
+            <li>Parcel: <strong>300ms</strong></li>
+            <li>Rollup: <strong>350ms</strong></li>
+            <li>Webpack: <strong>500ms</strong></li>
+        </ul>
+    </section>
+
+    <!-- 5. FAQ COMPACTO -->
+    <section>
+        <h2>❓ FAQ</h2>
+
+        <div class="faq-item">
+            <h3>Which is fastest?</h3>
+            <p>ESBuild for raw speed. Vite for dev experience. All comparable for production after optimization.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Webpack to Vite worth it?</h3>
+            <p>New projects: YES. Existing: Consider Turbopack first (drop-in replacement).</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>ESBuild production-ready?</h3>
+            <p>Yes. Used by Stripe, Figma, Vercel. Good for tools/libraries, less ideal solo for complex apps.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Use multiple bundlers?</h3>
+            <p>Yes. Vite for dev, ESBuild for scripts, Rollup for libs. Common hybrid approach.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Parcel vs Vite?</h3>
+            <p>Both zero-config friendly. Vite faster and better ecosystem. Parcel more automatic.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Small team project?</h3>
+            <p>Use Vite. Fast, simple, great DX. Focus on code, not build setup.</p>
+        </div>
+    </section>
+
+    <!-- 6. DETAILED COMPARISONS (LINKS) -->
+    <section>
+        <h2>🔗 Detailed Comparisons</h2>
+        <div class="cards">
+            <div class="card">
+                <h3>Vite vs Webpack</h3>
+                <p>Modern DX vs mature ecosystem.</p>
+                <a href="/vite-webpack/">→ Read more</a>
             </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span>Should I migrate from Webpack to Vite?</span>
-                    <span class="faq-icon">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <p>If you're starting a new project, Vite is an excellent choice. For existing Webpack projects, migration may not be worth it unless you're experiencing significant performance issues. Evaluate based on your specific needs and team expertise.</p>
-                </div>
+            <div class="card">
+                <h3>ESBuild vs Webpack</h3>
+                <p>Speed vs plugin ecosystem.</p>
+                <a href="/webpack-esbuild/">→ Read more</a>
             </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span>Is SWC ready to replace Babel?</span>
-                    <span class="faq-icon">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <p>SWC is significantly faster than Babel and has good TypeScript support. However, Babel has a larger ecosystem. SWC is a solid choice for new projects, while Babel remains the safer option for complex setups.</p>
-                </div>
+            <div class="card">
+                <h3>Vite vs ESBuild</h3>
+                <p>Dev experience vs speed.</p>
+                <a href="/esbuild-vite/">→ Read more</a>
             </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span>What about Rollup vs Webpack?</span>
-                    <span class="faq-icon">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <p>Rollup is optimized for bundling libraries with minimal overhead. Webpack is better for complex applications. For most library projects, Rollup is the better choice due to cleaner output and easier configuration.</p>
-                </div>
-            </section>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span>What are the key metrics to evaluate build tools?</span>
-                    <span class="faq-icon">▼</span>
-                </div>
-                <div class="faq-answer">
-                    <p>Key metrics include: cold start time (development), HMR speed (hot reload), bundle size (production), plugin ecosystem (extensibility), learning curve (team adoption), and community support (long-term viability).</p>
-                </div>
+            <div class="card">
+                <h3>Webpack vs Turbopack</h3>
+                <p>Legacy vs modern upgrade.</p>
+                <a href="/webpack-turbopack/">→ Read more</a>
+            </div>
+            <div class="card">
+                <h3>Rollup vs Webpack</h3>
+                <p>Libraries vs apps.</p>
+                <a href="/rollup-webpack/">→ Read more</a>
+            </div>
+            <div class="card">
+                <h3>Parcel vs Vite</h3>
+                <p>Zero-config comparison.</p>
+                <a href="/parcel-vite/">→ Read more</a>
             </div>
         </div>
     </section>
 
-    <!-- DETAILED COMPARISONS SECTION -->
-    <section>
-        <h2>🔗 Dive Deeper: Detailed Tool Comparisons</h2>
-        <p>Want a comprehensive analysis of specific tool matchups? Explore our detailed comparisons and performance deep-dives:</p>
-        
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px;">
-            
-            <div style="border: 2px solid var(--border); border-radius: 8px; padding: 20px; transition: all 0.3s ease;">
-                <h3 style="color: var(--primary); margin-bottom: 10px;">⚡ Vite vs Webpack</h3>
-                <p style="color: var(--text-secondary); margin-bottom: 15px; font-size: 0.95rem;">Modern DX vs mature flexibility. Which is right for you?</p>
-                <a href="./vite-webpack/" style="color: var(--primary); text-decoration: none; font-weight: 600;">Read Full Analysis →</a>
-            </div>
-
-            <div style="border: 2px solid var(--border); border-radius: 8px; padding: 20px; transition: all 0.3s ease;">
-                <h3 style="color: var(--primary); margin-bottom: 10px;">⚡ ESBuild vs Vite</h3>
-                <p style="color: var(--text-secondary); margin-bottom: 15px; font-size: 0.95rem;">Raw speed vs optimized workflow. Performance deep-dive.</p>
-                <a href="./esbuild-vite/" style="color: var(--primary); text-decoration: none; font-weight: 600;">Read Full Analysis →</a>
-            </div>
-
-            <div style="border: 2px solid var(--border); border-radius: 8px; padding: 20px; transition: all 0.3s ease;">
-                <h3 style="color: var(--primary); margin-bottom: 10px;">⚙️ Webpack vs ESBuild</h3>
-                <p style="color: var(--text-secondary); margin-bottom: 15px; font-size: 0.95rem;">Flexibility & ecosystem vs blazing fast performance.</p>
-                <a href="./webpack-esbuild/" style="color: var(--primary); text-decoration: none; font-weight: 600;">Read Full Analysis →</a>
-            </div>
-
-            <div style="border: 2px solid var(--border); border-radius: 8px; padding: 20px; transition: all 0.3s ease;">
-                <h3 style="color: var(--primary); margin-bottom: 10px;">🔄 Babel vs SWC</h3>
-                <p style="color: var(--text-secondary); margin-bottom: 15px; font-size: 0.95rem;">JavaScript transpiler showdown. Speed comparison.</p>
-                <a href="./babel-swc/" style="color: var(--primary); text-decoration: none; font-weight: 600;">Read Full Analysis →</a>
-            </div>
-
-            <div style="border: 2px solid var(--border); border-radius: 8px; padding: 20px; transition: all 0.3s ease;">
-                <h3 style="color: var(--primary); margin-bottom: 10px;">📦 Rollup vs Webpack</h3>
-                <p style="color: var(--text-secondary); margin-bottom: 15px; font-size: 0.95rem;">Library bundling vs app bundling. When to use each.</p>
-                <a href="./rollup-webpack/" style="color: var(--primary); text-decoration: none; font-weight: 600;">Read Full Analysis →</a>
-            </div>
-
-            <div style="border: 2px solid var(--border); border-radius: 8px; padding: 20px; transition: all 0.3s ease;">
-                <h3 style="color: var(--primary); margin-bottom: 10px;">🚀 Parcel vs Vite</h3>
-                <p style="color: var(--text-secondary); margin-bottom: 15px; font-size: 0.95rem;">Zero-config comparison. Modern web dev tools.</p>
-                <a href="./parcel-vite/" style="color: var(--primary); text-decoration: none; font-weight: 600;">Read Full Analysis →</a>
-            </div>
-
-        </div>
+    <!-- 7. BONUS: WEBPACK VS ROBLOX (EASTER EGG) -->
+    <section class="bonus-note">
+        <h2>🤔 Webpack vs Roblox Studio?</h2>
+        <p>If you're here comparing Webpack and Roblox Studio, you're mixing two different tools:</p>
+        <ul>
+            <li><strong>Webpack</strong> = JavaScript module bundler (web development)</li>
+            <li><strong>Roblox Studio</strong> = Game engine (game development with Lua)</li>
+        </ul>
+        <p>This guide covers JavaScript bundlers. For game engines, check <a href="https://godotengine.org" target="_blank">Godot</a>, <a href="https://unity.com" target="_blank">Unity</a>, or <a href="https://www.roblox.com/studio" target="_blank">Roblox Studio</a>.</p>
     </section>
 </div>
 
-<!-- FOOTER -->
 <footer>
-    <p>&copy; 2025 Build Tools Comparison. Made by <strong>FranRival</strong> - JavaScript performance & build optimization.</p>
+    <p>Build Tools Comparison 2025 | <a href="https://emmanuelibarra.com">FranRival</a></p>
 </footer>
-
-<!-- JAVASCRIPT -->
-<script>
-    // FAQ Toggle
-    function toggleFaq(element) {
-        const parent = element.parentElement;
-        parent.classList.toggle('active');
-    }
-
-    // Tool Comparison Logic
-    function compareTools() {
-        const priority = document.getElementById('priority').value;
-        const projectType = document.getElementById('projectType').value;
-        const teamSize = document.getElementById('teamSize').value;
-
-        let recommendation = '';
-        let score = '';
-        let reason = '';
-
-        // Logic for recommendations
-        if (priority === 'speed' && projectType === 'spa') {
-            recommendation = 'Vite';
-            score = '9.5/10';
-            reason = 'Vite offers the fastest development experience with lightning-quick cold starts and instant HMR. Perfect for modern SPA projects.';
-        } else if (priority === 'speed' && projectType === 'library') {
-            recommendation = 'ESBuild';
-            score = '9.8/10';
-            reason = 'ESBuild is the fastest bundler available, ideal for library bundling with minimal configuration needed.';
-        } else if (priority === 'ecosystem' || teamSize === 'large') {
-            recommendation = 'Webpack';
-            score = '9.2/10';
-            reason = 'Webpack has the most mature ecosystem and is proven at scale in enterprise environments. Best for large teams.';
-        } else if (priority === 'ease' || teamSize === 'solo') {
-            recommendation = 'Vite';
-            score = '9.0/10';
-            reason = 'Vite requires minimal configuration and has the gentlest learning curve among modern build tools.';
-        } else if (projectType === 'legacy') {
-            recommendation = 'Webpack';
-            score = '8.5/10';
-            reason = 'Webpack is the safest choice for legacy projects with the most mature support for older JavaScript patterns.';
-        } else {
-            recommendation = 'Vite';
-            score = '9.3/10';
-            reason = 'Vite balances speed, ease of use, and modern development experience. A great all-around choice.';
-        }
-
-        // Show results
-        document.getElementById('toolResults').style.display = 'block';
-        document.getElementById('recommendation').textContent = recommendation;
-        document.getElementById('score').textContent = score;
-        document.getElementById('reason').textContent = reason;
-    }
-
-    function resetTool() {
-        document.getElementById('priority').value = 'speed';
-        document.getElementById('projectType').value = 'spa';
-        document.getElementById('teamSize').value = 'solo';
-        document.getElementById('toolResults').style.display = 'none';
-    }
-</script>
 
 
 </body>
